@@ -1,6 +1,8 @@
 import "./JobListCard.css";
 import Image, { StaticImageData } from "next/image";
 import { Epilogue } from "next/font/google";
+import BorderBasedTag from "../BorderBasedTag/BorderBasedTag";
+import FilledTag from "../FilledTag/FilledTag";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 export interface CardType {
@@ -60,31 +62,22 @@ const JobListCard = ({
             {mainContent}
           </p>
           <div className="flex gap-2">
-            <div
-              className={
-                epilogue.className +
-                " rounded-[80px] bg-[#56CDAD1A]/10 px-[10px] py-[6px] text-[#56CDAD] font-semibold min-h-[31px] min-w-[60px] text-center"
-              }
-            >
-              {where}
-            </div>
+            <BorderBasedTag
+              fontClassName={epilogue.className}
+              text={where}
+              color="#56CDAD1A"
+            />
             <div className="w-[1px] h-8 bg-[#D6DDEB]"></div>
-            <div
-              className={
-                epilogue.className +
-                " rounded-[80px] border-[#FFB836] border-[1px] px-[10px] py-[6px] text-[#FFB836] font-semibold min-h-[31px] min-w-[60px] text-center"
-              }
-            >
-              Education
-            </div>
-            <div
-              className={
-                epilogue.className +
-                " rounded-[80px] border-[#4640DE] border-[1px] px-[10px] py-[6px] text-[#4640DE] font-semibold min-h-[31px] min-w-[60px] text-center"
-              }
-            >
-              IT
-            </div>
+            <FilledTag
+              fontClassName={epilogue.className}
+              text="Education"
+              color="#FFB836"
+            />
+            <FilledTag
+              fontClassName={epilogue.className}
+              text="IT"
+              color="#4640DE"
+            />
           </div>
         </div>
       </div>
