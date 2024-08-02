@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from "next/image";
 import "./KeyValueIcon.css";
-import { Epilogue } from "next/font/google";
 import { epilogue } from "../JobListCard/JobListCard";
 
 export interface KeyValueType {

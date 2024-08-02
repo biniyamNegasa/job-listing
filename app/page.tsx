@@ -3,6 +3,7 @@ import JobListCard, { CardType } from "./JobListCard/JobListCard";
 import eagleImage from "../public/logo-eagle.jpg";
 import calendarIcon from "../public/calendar.png";
 import KeyValueIcon, { KeyValueType } from "./KeyValueIcon/KeyValueIcon";
+import ApplicantDashboard from "./ApplicantDashboard/ApplicantDashboard";
 
 export default function Home() {
   const obj: CardType = {
@@ -25,7 +26,7 @@ export default function Home() {
 
   return (
     <main>
-      <JobListCard
+      {/* <JobListCard
         title={obj.title}
         mainContent={obj.mainContent}
         where={obj.where}
@@ -39,7 +40,8 @@ export default function Home() {
         keyProp={keyValue.keyProp}
         value={keyValue.value}
         iconAlt={keyValue.iconAlt}
-      />
+      /> */}
+      <ApplicantDashboard />
     </main>
   );
 }
