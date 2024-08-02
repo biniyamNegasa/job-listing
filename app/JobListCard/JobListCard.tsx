@@ -4,7 +4,7 @@ import { Epilogue } from "next/font/google";
 import BorderBasedTag from "../BorderBasedTag/BorderBasedTag";
 import FilledTag from "../FilledTag/FilledTag";
 
-const epilogue = Epilogue({ subsets: ["latin"] });
+export const epilogue = Epilogue({ subsets: ["latin"] });
 export interface CardType {
   title: string;
   mainContent: string;
