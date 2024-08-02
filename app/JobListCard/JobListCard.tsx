@@ -37,7 +37,7 @@ const JobListCard = ({
           >
             {title}
           </h3>
-          <div className="flex w-px-454 h-px-27 gap-2">
+          <div className="flex items-center w-px-454 h-px-27 gap-2">
             <div
               className={
                 epilogue.className +
