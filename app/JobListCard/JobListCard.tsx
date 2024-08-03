@@ -62,21 +62,24 @@ const JobListCard = ({
             {mainContent}
           </p>
           <div className="flex gap-2">
-            <BorderBasedTag
+            <FilledTag
               fontClassName={epilogue.className}
               text={where}
-              color="#56CDAD1A"
+              color="text-[#56CDAD]"
+              bgColor="bg-[#56CDAD]/10"
             />
             <div className="w-[1px] h-8 bg-[#D6DDEB]"></div>
-            <FilledTag
+            <BorderBasedTag
               fontClassName={epilogue.className}
               text="Education"
-              color="#FFB836"
+              color="text-[#FFB836]"
+              borderColor="border-[#FFB836]"
             />
-            <FilledTag
+            <BorderBasedTag
               fontClassName={epilogue.className}
               text="IT"
-              color="#4640DE"
+              color="text-[#4640DE]"
+              borderColor="border-[#4640DE]"
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import eagleImage from "../public/logo-eagle.jpg";
 import calendarIcon from "../public/calendar.png";
 import KeyValueIcon, { KeyValueType } from "./KeyValueIcon/KeyValueIcon";
 import ApplicantDashboard from "./ApplicantDashboard/ApplicantDashboard";
+import JobList from "./JobList/JobList";
 
 export default function Home() {
   const obj: CardType = {
@@ -26,22 +27,7 @@ export default function Home() {
 
   return (
     <main>
-      {/* <JobListCard
-        title={obj.title}
-        mainContent={obj.mainContent}
-        where={obj.where}
-        who={obj.who}
-        imageAlt={obj.imageAlt}
-        place={obj.place}
-        imageLink={obj.imageLink}
-      />
-      <KeyValueIcon
-        icon={keyValue.icon}
-        keyProp={keyValue.keyProp}
-        value={keyValue.value}
-        iconAlt={keyValue.iconAlt}
-      /> */}
-      <ApplicantDashboard />
+      <JobList />
     </main>
   );
 }

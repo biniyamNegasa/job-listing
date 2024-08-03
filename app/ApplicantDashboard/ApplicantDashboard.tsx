@@ -7,7 +7,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import BorderBasedTag from "../BorderBasedTag/BorderBasedTag";
 
-const poppins = Poppins({
+export const poppins = Poppins({
   subsets: ["latin"],
   weight: "900",
 });
@@ -152,13 +152,13 @@ const ApplicantDashboard = () => {
             Catagories
           </div>
           <div className="flex gap-2">
-            <BorderBasedTag
+            <FilledTag
               color="text-[#FFB836]"
               bgColor="bg-[#EB85331A]/10"
               text="Marketing"
               fontClassName={epilogue.className}
             />
-            <BorderBasedTag
+            <FilledTag
               color="text-[#56CDAD]"
               bgColor="bg-[#56CDAD]/10"
               text="Design"
@@ -172,19 +172,19 @@ const ApplicantDashboard = () => {
             Required Skills
           </div>
           <div className="flex flex-wrap gap-2">
-            <FilledTag
+            <BorderBasedTag
               color="text-[#4640DE]"
               borderColor="border-[#4640DE]"
               text="Social Media Marketing"
               fontClassName={epilogue.className}
             />
-            <FilledTag
+            <BorderBasedTag
               color="text-[#4640DE]"
               borderColor="border-[#4640DE]"
               text="English"
               fontClassName={epilogue.className}
             />
-            <FilledTag
+            <BorderBasedTag
               color="text-[#4640DE]"
               borderColor="border-[#4640DE]"
               text="Copywriting"
