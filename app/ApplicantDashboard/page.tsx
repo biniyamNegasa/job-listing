@@ -14,7 +14,7 @@ const DataPage = () => {
       (d, index) => index.toString() == searchId
     );
     console.log(jobPost);
-    if (jobPostData) {
+    if (jobPostData && jobPostData[0]) {
       const misc: DashboardType = {
         categories: jobPostData[0].about.categories,
         deadline: jobPostData[0].about.deadline,
@@ -35,7 +35,7 @@ const DataPage = () => {
   return jobPost ? (
     <ApplicantDashboard {...jobPost} />
   ) : (
-    <p>There's no page with description</p>
+    <p>There's no page with that description</p>
   );
 };
 
