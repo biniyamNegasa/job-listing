@@ -1,9 +1,54 @@
-import JobListCard, { epilogue } from "../JobListCard/JobListCard";
+"use client";
+
+import JobListCard, { CardType, epilogue } from "../JobListCard/JobListCard";
 import "./JobList.css";
 import imageLink from "../../public/logo-eagle.jpg";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
+import jobPostings from "../jobs.json";
+import { useRouter } from "next/navigation";
+
+export interface JobPosting {
+  title: string;
+  description: string;
+  responsibilities: string[];
+  ideal_candidate: {
+    age: string;
+    gender: string;
+    traits: string[];
+  };
+  when_where: string;
+  about: {
+    posted_on: string;
+    deadline: string;
+    location: string;
+    start_date: string;
+    end_date: string;
+    categories: string[];
+    required_skills: string[];
+  };
+  company: string;
+  image: string;
+}
+
+export const postings: JobPosting[] = jobPostings.job_postings;
+let list: CardType[] = [];
+
+for (let jobPost of postings) {
+  let customCard: CardType = {
+    description: jobPost.description,
+    categories: jobPost.about.categories,
+    company: jobPost.company,
+    imageLink: jobPost.image,
+    location: jobPost.about.location,
+    title: jobPost.title,
+    where: "In Person",
+  };
+  list.push(customCard);
+}
 
 const JobList = () => {
+  const router = useRouter();
+
   return (
     <div className="py-[72px] pl-[124px]">
       <div className="w-[919px] flex flex-col gap-10">
@@ -36,42 +81,11 @@ const JobList = () => {
             <div className="h-8 border-[1px] border-[#202430]/10"></div>
           </div>
         </div>
-        <JobListCard
-          title="Something"
-          imageAlt="again"
-          imageLink={imageLink}
-          mainContent="Et nisi nostrud voluptate aliqua officia in consequat. Et occaecat mollit tempor sint excepteur nulla anim et elit occaecat. Excepteur adipisicing dolore velit Lorem consectetur magna enim sint consequat fugiat ex officia quis. Non incididunt nisi veniam irure tempor in ad exercitation incididunt culpa minim culpa laboris culpa. Magna irure in cupidatat ea fugiat excepteur consectetur mollit mollit elit cillum ex."
-          place="Addis Ababa, Ethiopia"
-          where="In Person"
-          who="Blabla PLC"
-        />
-        <JobListCard
-          title="Something"
-          imageAlt="again"
-          imageLink={imageLink}
-          mainContent="Et nisi nostrud voluptate aliqua officia in consequat. Et occaecat mollit tempor sint excepteur nulla anim et elit occaecat. Excepteur adipisicing dolore velit Lorem consectetur magna enim sint consequat fugiat ex officia quis. Non incididunt nisi veniam irure tempor in ad exercitation incididunt culpa minim culpa laboris culpa. Magna irure in cupidatat ea fugiat excepteur consectetur mollit mollit elit cillum ex."
-          place="Addis Ababa, Ethiopia"
-          where="In Person"
-          who="Blabla PLC"
-        />
-        <JobListCard
-          title="Something"
-          imageAlt="again"
-          imageLink={imageLink}
-          mainContent="Et nisi nostrud voluptate aliqua officia in consequat. Et occaecat mollit tempor sint excepteur nulla anim et elit occaecat. Excepteur adipisicing dolore velit Lorem consectetur magna enim sint consequat fugiat ex officia quis. Non incididunt nisi veniam irure tempor in ad exercitation incididunt culpa minim culpa laboris culpa. Magna irure in cupidatat ea fugiat excepteur consectetur mollit mollit elit cillum ex."
-          place="Addis Ababa, Ethiopia"
-          where="In Person"
-          who="Blabla PLC"
-        />
-        <JobListCard
-          title="Something"
-          imageAlt="again"
-          imageLink={imageLink}
-          mainContent="Et nisi nostrud voluptate aliqua officia in consequat. Et occaecat mollit tempor sint excepteur nulla anim et elit occaecat. Excepteur adipisicing dolore velit Lorem consectetur magna enim sint consequat fugiat ex officia quis. Non incididunt nisi veniam irure tempor in ad exercitation incididunt culpa minim culpa laboris culpa. Magna irure in cupidatat ea fugiat excepteur consectetur mollit mollit elit cillum ex."
-          place="Addis Ababa, Ethiopia"
-          where="In Person"
-          who="Blabla PLC"
-        />
+        {list.map((card, index) => (
+          <div onClick={() => router.push(`/ApplicantDashboard?id=${index}`)}>
+            <JobListCard {...card} />
+          </div>
+        ))}
       </div>
     </div>
   );
