@@ -16,6 +16,12 @@ git clone https://github.com/biniyamNegasa/job-listing.git
 cd job-listing
 ```
 
+- Change branch
+
+```bash
+git checkout real-api-branch
+```
+
 - run the following
 
 ```bash
