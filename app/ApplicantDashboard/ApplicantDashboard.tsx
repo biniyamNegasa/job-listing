@@ -20,12 +20,12 @@ export const poppins = Poppins({
 
 export interface DashboardType {
   description: string;
-  responsibilities: string[];
-  traits: string[];
+  responsibilities: string;
+  traits: string;
   whenWhere: string;
   postedOn: string;
   deadline: string;
-  location: string;
+  location: string[];
   startDate: string;
   endDate: string;
   categories: string[];
@@ -69,12 +69,10 @@ const ApplicantDashboard = ({
              ${epilogue.className} 
                text-base font-normal text-[#25324B]`}
           >
-            {responsibilities.map((text) => (
-              <li className="flex gap-2">
-                <FaRegCheckCircle className="text-[#56CDAD] flex-none" />
-                {text}
-              </li>
-            ))}
+            <li className="flex gap-2">
+              <FaRegCheckCircle className="text-[#56CDAD] flex-none" />
+              {responsibilities}
+            </li>
           </ul>
         </div>
         <div className="flex flex-col gap-4">
@@ -87,9 +85,7 @@ const ApplicantDashboard = ({
               " text-base font-normal text-[#25324B] list-disc list-inside"
             }
           >
-            {traits.map((text) => (
-              <li>{text}</li>
-            ))}
+            <li>{traits}</li>
           </ul>
         </div>
         <div className="flex flex-col gap-4">
@@ -126,7 +122,7 @@ const ApplicantDashboard = ({
         />
         <KeyValueIcon
           keyProp="Location"
-          value={location}
+          value={location.join(", ")}
           icon={locationIcon}
           iconAlt="theThingAboutThatThing"
         />

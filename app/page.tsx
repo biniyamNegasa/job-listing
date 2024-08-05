@@ -1,10 +1,13 @@
+"use client";
+
+import { Provider } from "react-redux";
 import JobList from "./JobList/JobList";
+import { store } from "./store";
 
 export default function Home() {
   return (
-    <main>
-      {/* <ApplicantDashboard /> */}
+    <Provider store={store}>
       <JobList />
-    </main>
+    </Provider>
   );
 }

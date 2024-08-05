@@ -6,11 +6,12 @@ import FilledTag from "../FilledTag/FilledTag";
 
 export const epilogue = Epilogue({ subsets: ["latin"] });
 export interface CardType {
+  id?: string;
   title: string;
   description: string;
   imageLink: string;
   company: string;
-  location: string;
+  location: string[];
   where: string;
   categories: string[];
 }
@@ -55,7 +56,7 @@ const JobListCard = ({
                 "w-px-265 h-px-26 text-sm leading-6 font-normal text-[#7C8493]"
               }
             >
-              {location}
+              {location.join(", ")}
             </div>
           </div>
           <p className="w-px-744 h-px-112 font-normal text-base leading-6 text-[#25324B]">

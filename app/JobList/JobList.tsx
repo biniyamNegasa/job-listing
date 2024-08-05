@@ -2,51 +2,79 @@
 
 import JobListCard, { CardType, epilogue } from "../JobListCard/JobListCard";
 import "./JobList.css";
-import imageLink from "../../public/logo-eagle.jpg";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
-import jobPostings from "../jobs.json";
 import { useRouter } from "next/navigation";
+import {
+  useGetAllOpportunitiesQuery,
+  useGetOpportunityByIdQuery,
+} from "../service/job-info";
 
 export interface JobPosting {
+  id: string;
   title: string;
   description: string;
-  responsibilities: string[];
-  ideal_candidate: {
-    age: string;
-    gender: string;
-    traits: string[];
-  };
-  when_where: string;
-  about: {
-    posted_on: string;
-    deadline: string;
-    location: string;
-    start_date: string;
-    end_date: string;
-    categories: string[];
-    required_skills: string[];
-  };
-  company: string;
-  image: string;
+  responsibilities: string;
+  requirements: string;
+  idealCandidate: string;
+  categories: string[];
+  opType: string;
+  startDate: string;
+  endDate: string;
+  deadline: string;
+  location: string[];
+  requiredSkills: string[];
+  whenAndWhere: string;
+  orgID: string;
+  datePosted: string;
+  status: string;
+  applicantsCount: number;
+  viewsCount: number;
+  orgName: string;
+  logoUrl: string;
+  isBookmarked: boolean;
+  isRolling: boolean;
+  questions: string | null;
+  perksAndBenefits: string | null;
+  createdAt: string;
+  updatedAt: string;
+  orgPrimaryPhone: string;
+  orgEmail: string;
+  orgWebsite: string;
+  average_rating: number;
+  total_reviews: number;
 }
 
-export const postings: JobPosting[] = jobPostings.job_postings;
-let list: CardType[] = [];
-
-for (let jobPost of postings) {
-  let customCard: CardType = {
-    description: jobPost.description,
-    categories: jobPost.about.categories,
-    company: jobPost.company,
-    imageLink: jobPost.image,
-    location: jobPost.about.location,
-    title: jobPost.title,
-    where: "In Person",
-  };
-  list.push(customCard);
+export interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: JobPosting;
+  errors: string | null;
+  count: number;
 }
 
 const JobList = () => {
+  const { data, isError, isLoading } = useGetAllOpportunitiesQuery("");
+  console.log("iserror");
+  console.log(isError);
+  console.log("isloading");
+  console.log(isLoading);
+  console.log(data);
+  const postings: JobPosting[] = data.data;
+  let list: CardType[] = [];
+
+  for (let jobPost of postings) {
+    let customCard: CardType = {
+      id: jobPost.id,
+      description: jobPost.description,
+      categories: jobPost.categories,
+      company: jobPost.orgName,
+      imageLink: jobPost.logoUrl,
+      location: jobPost.location,
+      title: jobPost.title,
+      where: jobPost.opType,
+    };
+    list.push(customCard);
+  }
   const router = useRouter();
 
   return (
@@ -81,8 +109,8 @@ const JobList = () => {
             <div className="h-8 border-[1px] border-[#202430]/10"></div>
           </div>
         </div>
-        {list.map((card, index) => (
-          <div onClick={() => router.push(`/ApplicantDashboard?id=${index}`)}>
+        {list.map((card) => (
+          <div onClick={() => router.push(`/ApplicantDashboard?id=${card.id}`)}>
             <JobListCard {...card} />
           </div>
         ))}
