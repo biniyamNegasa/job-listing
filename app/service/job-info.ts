@@ -3,14 +3,14 @@ import { ApiResponse } from "../JobList/JobList";
 
 export const opportunitiesApi = createApi({
     reducerPath: "opportunities",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://akil-backend.onrender.com" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://akil-backend.onrender.com/"}),
 
     endpoints: (builder) => ({
         getAllOpportunities: builder.query({
-            query: () => "/opportunities/search",
+            query: () => "opportunities/search",
         }),
         getOpportunityById: builder.query({
-            query: (id) => `/opportunities/${id}`
+            query: (id) => `opportunities/${id}`
         })
     }),
 })

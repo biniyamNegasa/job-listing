@@ -1,5 +1,6 @@
 "use client";
-
+import { Provider } from "react-redux";
+import { store } from "../store";
 import JobListCard, { CardType, epilogue } from "../JobListCard/JobListCard";
 import "./JobList.css";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
@@ -8,6 +9,7 @@ import {
   useGetAllOpportunitiesQuery,
   useGetOpportunityByIdQuery,
 } from "../service/job-info";
+import { useEffect, useState } from "react";
 
 export interface JobPosting {
   id: string;
@@ -53,13 +55,14 @@ export interface ApiResponse {
 }
 
 const JobList = () => {
-  const { data, isError, isLoading } = useGetAllOpportunitiesQuery("");
-  console.log("iserror");
-  console.log(isError);
-  console.log("isloading");
-  console.log(isLoading);
-  console.log(data);
-  const postings: JobPosting[] = data.data;
+  const { data, isError, isLoading } = useGetAllOpportunitiesQuery({});
+  const [postings, setPostings] = useState<JobPosting[]>([]);
+  useEffect(() => {
+    console.log("data", data);
+    if (data) {
+      setPostings(data.data);
+    }
+  }, [data]);
   let list: CardType[] = [];
 
   for (let jobPost of postings) {
@@ -110,7 +113,10 @@ const JobList = () => {
           </div>
         </div>
         {list.map((card) => (
-          <div onClick={() => router.push(`/ApplicantDashboard?id=${card.id}`)}>
+          <div
+            onClick={() => router.push(`/ApplicantDashboard?id=${card.id}`)}
+            key={card.id}
+          >
             <JobListCard {...card} />
           </div>
         ))}

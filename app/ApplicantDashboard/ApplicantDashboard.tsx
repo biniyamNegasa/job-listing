@@ -69,10 +69,12 @@ const ApplicantDashboard = ({
              ${epilogue.className} 
                text-base font-normal text-[#25324B]`}
           >
-            <li className="flex gap-2">
-              <FaRegCheckCircle className="text-[#56CDAD] flex-none" />
-              {responsibilities}
-            </li>
+            {responsibilities.split("\n").map((text) => (
+              <li className="flex gap-2">
+                <FaRegCheckCircle className="text-[#56CDAD] flex-none" />
+                {text}
+              </li>
+            ))}
           </ul>
         </div>
         <div className="flex flex-col gap-4">
@@ -85,7 +87,9 @@ const ApplicantDashboard = ({
               " text-base font-normal text-[#25324B] list-disc list-inside"
             }
           >
-            <li>{traits}</li>
+            {traits.split("\n").map((text) => (
+              <li>{text}</li>
+            ))}
           </ul>
         </div>
         <div className="flex flex-col gap-4">
@@ -110,13 +114,13 @@ const ApplicantDashboard = ({
         </div>
         <KeyValueIcon
           keyProp="Posted On"
-          value={postedOn}
+          value={postedOn.slice(0, 10)}
           icon={plusCircle}
           iconAlt="theThingAboutThatThing"
         />
         <KeyValueIcon
           keyProp="Deadline"
-          value={deadline}
+          value={deadline.slice(0, 10)}
           icon={hot}
           iconAlt="theThingAboutThatThing"
         />
@@ -128,13 +132,13 @@ const ApplicantDashboard = ({
         />
         <KeyValueIcon
           keyProp="Start Date"
-          value={startDate}
+          value={startDate.slice(0, 10)}
           icon={calendar}
           iconAlt="theThingAboutThatThing"
         />
         <KeyValueIcon
           keyProp="End Date"
-          value={endDate}
+          value={endDate.slice(0, 10)}
           icon={calendarEnd}
           iconAlt="theThingAboutThatThing"
         />
