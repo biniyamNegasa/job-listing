@@ -27,10 +27,9 @@ npm install && npm run dev
 ### Landing page
 
 It has the list jobs of available
-![Job List](./public/job-list.png)
+![description page part 1](./public/fullpage.png)
 
 ### Description page
 
 Each job has its own detailed page
-![description page part 1](./public/description-p1.png)
-![description page part 2](./public/description-p2.png)
+![description page part 2](./public/screencaptureApplicantDashboard.png)
