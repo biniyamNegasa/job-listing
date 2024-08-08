@@ -19,7 +19,7 @@ cd job-listing
 - Change branch
 
 ```bash
-git checkout real-api-branch
+git checkout auth-branch
 ```
 
 - run the following
@@ -29,6 +29,18 @@ npm install && npm run dev
 ```
 
 ## Here are sample screenshots for the pages
+
+### Sign in page
+
+![sign in](./public/signin.png)
+
+### Sign up page
+
+![sign up](./public/signup.png)
+
+### OTP form page
+
+![otp form](./public/otpform.png)
 
 ### Landing page
 
