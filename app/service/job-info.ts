@@ -3,6 +3,7 @@ import { ApiResponse } from "../JobList/JobList";
 import { url } from "inspector";
 import FormType from "../types/FormType";
 import VerifyEmailType from "../types/VerifyEmailType";
+import SignInType from "../types/SignInType";
 
 export const opportunitiesApi = createApi({
     reducerPath: "opportunities",
@@ -32,8 +33,8 @@ export const opportunitiesApi = createApi({
             })
         }),
         signInUser: builder.mutation({
-            query: (data: FormType) => ({
-                url: '/signin',
+            query: (data: SignInType) => ({
+                url: '/login',
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

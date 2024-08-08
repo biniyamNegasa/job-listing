@@ -19,53 +19,8 @@ export const options = {
             clientId: process.env.GOOGLE_ID!,
             clientSecret: process.env.GOOGLE_Secret!,
         }),
-
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                email: {
-                    label: "email",
-                    type: "email",
-                    placeholder: "your-email"
-                },
-                password: {
-                    label: "password",
-                    type: "password",
-                    placeholder: "your-password"
-                }, 
-            },
-            async authorize(credentials, req){
-
-                const payload = {
-                    email: credentials?.email,
-                    password: credentials?.password,
-                }
-                const response = await fetch("https://akil-backend.onrender.com/login", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const user = await response.json();
-                    if (!response.ok){
-                        throw new Error(user.message);
-                    }
-
-                    if (response.ok && user){
-                        console.log(user)
-                        return user;
-                    }
-                
-                return null;
-            }
-        })
-        
     ],
-    pages: {
-        signIn: '/SignIn',
-    },
+    
     callbacks: {
         async jwt({ token, user }: {token: JWT, user: User}) {
             token.email = user.email,
@@ -78,5 +33,6 @@ export const options = {
             session.user!.name = token.name
             return session;
         }
-    }
+    },
+    session: {strategy: "jwt"},
 }

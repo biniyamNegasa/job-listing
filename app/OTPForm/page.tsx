@@ -9,6 +9,14 @@ import React, {
 import { useRouter } from "next/navigation";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
 import { epilogue } from "../JobListCard/JobListCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import {
+  useSignUpUserMutation,
+  useVerifyEmailMutation,
+} from "../service/job-info";
+import FormType from "../types/FormType";
+import VerifyEmailType from "../types/VerifyEmailType";
 
 const OTPForm: React.FC = () => {
   const router = useRouter();
@@ -17,6 +25,9 @@ const OTPForm: React.FC = () => {
   const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true);
   const [isContinueDisabled, setIsContinueDisabled] = useState<boolean>(true);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const formData: FormType = useSelector((state: RootState) => state.form.data);
+  const [SignUpUser] = useSignUpUserMutation();
+  const [VerifyEmail] = useVerifyEmailMutation();
 
   useEffect(() => {
     // Start the countdown timer when the component mounts
@@ -56,7 +67,8 @@ const OTPForm: React.FC = () => {
   const handleResendOtp = () => {
     // Logic to resend OTP goes here
     // For example: trigger an API call to resend the OTP
-
+    SignUpUser(formData);
+    console.log(formData);
     setCountdown(30); // Reset the countdown
     setIsResendDisabled(true); // Disable resend button again
 
@@ -73,14 +85,21 @@ const OTPForm: React.FC = () => {
     }, 1000);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const otpValue = otp.join("");
+    const data: VerifyEmailType = { email: formData.email, otp: otpValue };
     // Logic to verify OTP goes here
     // For example: trigger an API call to verify the OTP
+    const res = await VerifyEmail(data);
 
-    // Example: Navigate to a new page
-    router.push("/somepage");
+    console.log(res);
+    if (res && res.data && res.data.success) {
+      sessionStorage.setItem("name", res.data.name);
+      router.push("/SignIn");
+    } else {
+      alert("Invalid OTP code.");
+    }
   };
 
   return (
