@@ -45,7 +45,6 @@ type FormData = z.infer<typeof schema>;
 const SignUp = ({
   providers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  
   const dispatch = useDispatch();
   const router = useRouter();
   const {
@@ -85,7 +84,7 @@ const SignUp = ({
           </div>
           <button
             className="border border-gray-300 w-full mb-5 flex items-center justify-center p-3 rounded-md font-bold hover:border-black"
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google", { callbackUrl: "/JobList" })}
           >
             <span className="mr-3">
               <Image src="/google.svg" width={20} height={20} alt="google" />
