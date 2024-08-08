@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from "../JobList/JobList";
+import { ApiResponse } from "../JobList/page";
 import { url } from "inspector";
 import FormType from "../types/FormType";
 import VerifyEmailType from "../types/VerifyEmailType";

@@ -41,7 +41,7 @@ const SignIn = () => {
     if (res && res.data) {
       console.log("response: ", res);
       sessionStorage.setItem("name", res.data.name);
-      router.push("/");
+      router.push("/JobList");
     }
   };
 

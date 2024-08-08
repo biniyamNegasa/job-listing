@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { JobPosting } from "../JobList/JobList";
+import { JobPosting } from "../JobList/page";
 import ApplicantDashboard, { DashboardType } from "./ApplicantDashboard";
 import { useGetOpportunityByIdQuery } from "../service/job-info";
 
