@@ -1,16 +1,11 @@
 "use client";
-import { Provider } from "react-redux";
-import { store } from "../store";
 import JobListCard, { CardType, epilogue } from "../JobListCard/JobListCard";
 import "./JobList.css";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
 import { useRouter } from "next/navigation";
-import {
-  useGetAllOpportunitiesQuery,
-  useGetOpportunityByIdQuery,
-} from "../service/job-info";
+import { useGetAllOpportunitiesQuery } from "../service/job-info";
 import { useEffect, useState } from "react";
-
+import { useSession } from "next-auth/react";
 export interface JobPosting {
   id: string;
   title: string;
@@ -55,10 +50,17 @@ export interface ApiResponse {
 }
 
 const JobList = () => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    console.log(session, status);
+  }, [status]);
+
+  if (!session) router.push("/SignIn");
+
   const { data, isError, isLoading } = useGetAllOpportunitiesQuery({});
   const [postings, setPostings] = useState<JobPosting[]>([]);
   useEffect(() => {
-    console.log("data", data);
     if (data) {
       setPostings(data.data);
     }
@@ -78,7 +80,6 @@ const JobList = () => {
     };
     list.push(customCard);
   }
-  const router = useRouter();
 
   return (
     <div className="py-[72px] pl-[124px]">

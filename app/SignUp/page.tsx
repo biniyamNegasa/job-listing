@@ -205,22 +205,4 @@ const SignUp = ({
   );
 };
 
-export async function GetServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getServerSession(context.req, context.res, options);
-
-  if (session) {
-    return {
-      redirect: { destination: "/" },
-    };
-  }
-
-  const providers = await getProviders();
-
-  return {
-    props: {
-      providers: providers ?? [],
-    },
-  };
-}
-
 export default SignUp;

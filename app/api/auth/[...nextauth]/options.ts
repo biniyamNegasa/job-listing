@@ -1,9 +1,9 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { JWT } from "next-auth/jwt";
-import { User, Session } from "next-auth";
+import signInUser from "@/app/lib/signInUser";
+import { NextAuthOptions } from "next-auth";
 
-export const options = {
+export const options: NextAuthOptions = {
     providers: [
         GoogleProvider({
             profile(profile){
@@ -19,18 +19,56 @@ export const options = {
             clientId: process.env.GOOGLE_ID!,
             clientSecret: process.env.GOOGLE_Secret!,
         }),
+        CredentialsProvider({
+            type: "credentials",
+            credentials: {
+                email: {
+                    label: 'email',
+                    type: "text",
+                },
+                password: {
+                    label: 'password',
+                    type: "password",
+                }
+                
+            },
+
+            async authorize(credentials) {
+                const {email, password} = credentials as {
+                    email: string,
+                    password: string,
+                };
+                try {
+                    const res = await signInUser({email, password});
+                    return ({
+                        id: res.id,
+                        name: res.name,
+                        email: res.email,
+                        accessToken: res.accessToken,
+                        refreshToken: res.refreshToken
+                    });
+
+                }catch(error){
+                    return null;
+                };
+            },
+        })
     ],
-    
+    pages: {
+        signIn: '/SignIn'
+    },
     callbacks: {
-        async jwt({ token, user }: {token: JWT, user: User}) {
-            token.email = user.email,
-            token.name = user.name
+        async jwt({ token, user }: {token: any, user: any}) {
+            token.accessToken = user?.accessToken,
+            token.refreshToken = user?.refreshToken
+
             return token;
         },
 
-        async session({ session, token }: {session: Session, token: JWT}) {
-            session.user!.email = token.email,
-            session.user!.name = token.name
+        async session({ session, token }: {session: any, token: any}) {
+            session.user.accessToken = token.accessToken,
+            session.user.refreshToken = token.refreshToken
+            
             return session;
         }
     },

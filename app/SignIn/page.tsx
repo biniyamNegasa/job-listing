@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import SignInType from "../types/SignInType";
 import { useSignInUserMutation } from "../service/job-info";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -24,27 +25,22 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-  const [SignInUser, { isLoading, isError }] = useSignInUserMutation();
 
   const onSubmit = async (data: SignInType) => {
-    let res = await SignInUser(data);
+    let res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
 
-    if (res && res.error) {
-      return alert("Invalid Credentials");
-    }
-    if (isError) {
-      return <h1 className="text-red-900">Error</h1>;
-    }
-    if (isLoading) {
-      return <h1>Loading...</h1>;
-    }
-    if (res && res.data) {
+    if (!res?.ok) {
+      alert("Invalid Credentials");
+      router.push("/SignIn");
+    } else {
       console.log("response: ", res);
-      sessionStorage.setItem("name", res.data.name);
       router.push("/JobList");
     }
   };
-
   return (
     <div className="flex justify-center pt-[34px] pb-[50px] pr-14">
       <div className="flex flex-col gap-6">
