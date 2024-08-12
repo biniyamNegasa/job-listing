@@ -3,9 +3,12 @@ import JobListCard, { CardType, epilogue } from "../JobListCard/JobListCard";
 import "./JobList.css";
 import { poppins } from "../ApplicantDashboard/ApplicantDashboard";
 import { useRouter } from "next/navigation";
-import { useGetAllOpportunitiesQuery } from "../service/job-info";
+import {
+  useGetAllOpportunitiesQuery,
+  useGetBookmarkQuery,
+} from "../service/job-info";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 export interface JobPosting {
   id: string;
   title: string;
@@ -49,16 +52,41 @@ export interface ApiResponse {
   count: number;
 }
 
+interface UserSession {
+  user: {
+    name: string;
+    email: string;
+    accessToken: string;
+    refreshToken: string;
+  };
+  expires: string;
+}
+
+interface Session {
+  data: UserSession | null;
+  status: "loading" | "authenticated" | "unauthenticated";
+}
+
 const JobList = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as Session;
+
   useEffect(() => {
-    console.log(session, status);
-  }, [status]);
+    console.log("my session: ", session, status);
+  }, [status, session]);
 
-  if (!session) router.push("/SignIn");
+  // Change if the user is not authenticated
+  if (status === "unauthenticated") router.push("/SignIn");
 
-  const { data, isError, isLoading } = useGetAllOpportunitiesQuery({});
+  const accessToken = session?.user?.accessToken;
+
+  const bookmarkDataObject = useGetBookmarkQuery({accessToken});
+  console.log(bookmarkDataObject.data);
+
+  const { data, isError, isLoading } = useGetAllOpportunitiesQuery({
+    accessToken,
+  });
+  console.log(data);
   const [postings, setPostings] = useState<JobPosting[]>([]);
   useEffect(() => {
     if (data) {
@@ -77,6 +105,8 @@ const JobList = () => {
       location: jobPost.location,
       title: jobPost.title,
       where: jobPost.opType,
+      accessToken: accessToken!,
+      isBookmarked: jobPost.isBookmarked,
     };
     list.push(customCard);
   }
@@ -84,6 +114,20 @@ const JobList = () => {
   return (
     <div className="py-[72px] pl-[124px]">
       <div className="w-[919px] flex flex-col gap-10">
+        <div className="flex justify-between">
+          <div className="flex gap-2">
+            <button 
+            className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl`}>HOME</button>
+            <button 
+            className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl`}>Bookmarks</button>
+          </div>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className={`${epilogue} font-bold text-white text-center bg-[#f51d1d] px-5 py-3 rounded-3xl`}
+          >
+            Logout
+          </button>
+        </div>
         <div className="flex justify-between">
           <div className="flex flex-col gap-1">
             <div
@@ -94,7 +138,7 @@ const JobList = () => {
             <div
               className={`${epilogue.className} text-base font-normal text-[#7C8493]`}
             >
-              Showing 73 results
+              Showing {list.length} results
             </div>
           </div>
           <div className="flex gap-[22px]">
@@ -114,10 +158,7 @@ const JobList = () => {
           </div>
         </div>
         {list.map((card) => (
-          <div
-            onClick={() => router.push(`/ApplicantDashboard?id=${card.id}`)}
-            key={card.id}
-          >
+          <div key={card.id}>
             <JobListCard {...card} />
           </div>
         ))}

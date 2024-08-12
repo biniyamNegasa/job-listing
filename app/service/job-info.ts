@@ -7,14 +7,20 @@ import SignInType from "../types/SignInType";
 
 export const opportunitiesApi = createApi({
     reducerPath: "opportunities",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://akil-backend.onrender.com/"}),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://akil-backend.onrender.com"}),
 
     endpoints: (builder) => ({
         getAllOpportunities: builder.query({
-            query: () => "opportunities/search",
+            query: ({accessToken}) => ({
+                url: '/opportunities/search',
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
         }),
         getOpportunityById: builder.query({
-            query: (id) => `opportunities/${id}`
+            query: (id) => `/opportunities/${id}`
         }), 
         signUpUser: builder.mutation({
             query: (data: FormType) => ({
@@ -58,10 +64,40 @@ export const opportunitiesApi = createApi({
                 }   
             })
         }),
-
+        getBookmark: builder.query({
+            query: ({accessToken}) => ({
+                url: '/bookmarks',
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+        })
+        ,
+        createBookmark: builder.mutation({
+            query: ({id, accessToken}) => ({
+                url: `/bookmarks/${id}`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                },
+            })
+        }),
+        deleteBookmark: builder.mutation({
+            query: ({id, accessToken}) => ({
+                url: `/bookmarks/${id}`,
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                },
+            })
+        }),
     }),
 })
 
 
 
-export const { useGetAllOpportunitiesQuery, useGetOpportunityByIdQuery, useSignInUserMutation, useSignUpUserMutation, useVerifyEmailMutation } = opportunitiesApi;
+export const { useGetAllOpportunitiesQuery, useGetOpportunityByIdQuery, 
+               useSignInUserMutation, useSignUpUserMutation, 
+               useVerifyEmailMutation, useCreateBookmarkMutation,
+               useDeleteBookmarkMutation, useGetBookmarkQuery } = opportunitiesApi;

@@ -20,7 +20,7 @@ async function signInUser({ email, password }: SignInType) {
         
         const resData = await response.json(); // Parse the JSON response
         console.log(resData);
-        return resData;
+        return resData.data;
     } catch (error) {
         console.error("Error in signInUser:", error);
         throw error;

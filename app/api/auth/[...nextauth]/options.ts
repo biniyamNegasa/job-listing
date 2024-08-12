@@ -59,18 +59,29 @@ export const options: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }: {token: any, user: any}) {
-            token.accessToken = user?.accessToken,
-            token.refreshToken = user?.refreshToken
+            if (user){
+                token.id = user.id,
+                token.name = user.name,
+                token.email = user.email,
+                token.accessToken = user.accessToken,
+                token.refreshToken = user.refreshToken
+
+            }
 
             return token;
         },
 
         async session({ session, token }: {session: any, token: any}) {
-            session.user.accessToken = token.accessToken,
-            session.user.refreshToken = token.refreshToken
+            if (session?.user){
+
+                session.user.id = token.id,
+                session.user.name = token.name,
+                session.user.email = token.email,
+                session.user.accessToken = token.accessToken,
+                session.user.refreshToken = token.refreshToken
+            }
             
             return session;
         }
     },
-    session: {strategy: "jwt"},
 }

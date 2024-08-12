@@ -3,13 +3,13 @@ import "./FilledTag.css";
 
 const FilledTag = ({ fontClassName, bgColor, color, text }: TagTypes) => {
   return (
-    <div
+    <button
       className={`
-        ${fontClassName} rounded-[80px] ${bgColor} px-[10px] py-[6px] ${color} font-semibold text-center"
+        ${fontClassName} rounded-[80px] ${bgColor} px-[10px] py-[6px] ${color} font-semibold "
       `}
     >
       {text}
-    </div>
+    </button>
   );
 };
 
