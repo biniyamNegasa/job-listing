@@ -38,7 +38,7 @@ const SignIn = () => {
       router.push("/SignIn");
     } else {
       console.log("response: ", res);
-      router.push("/JobList");
+      router.push("/");
     }
   };
   return (

@@ -75,12 +75,13 @@ const JobList = () => {
     console.log("my session: ", session, status);
   }, [status, session]);
 
-  // Change if the user is not authenticated
-  if (status === "unauthenticated") router.push("/SignIn");
+  let accessToken = "";
+  if (status === "unauthenticated") {
+  } else {
+    accessToken = session?.user?.accessToken!;
+  }
 
-  const accessToken = session?.user?.accessToken;
-
-  const bookmarkDataObject = useGetBookmarkQuery({accessToken});
+  const bookmarkDataObject = useGetBookmarkQuery({ accessToken });
   console.log(bookmarkDataObject.data);
 
   const { data, isError, isLoading } = useGetAllOpportunitiesQuery({
@@ -107,6 +108,7 @@ const JobList = () => {
       where: jobPost.opType,
       accessToken: accessToken!,
       isBookmarked: jobPost.isBookmarked,
+      status: status,
     };
     list.push(customCard);
   }
@@ -116,17 +118,35 @@ const JobList = () => {
       <div className="w-[919px] flex flex-col gap-10">
         <div className="flex justify-between">
           <div className="flex gap-2">
-            <button 
-            className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl`}>HOME</button>
-            <button 
-            className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl`}>Bookmarks</button>
+            <button
+              onClick={() => router.push("/")}
+              className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE] `}
+            >
+              HOME
+            </button>
+            {status == "authenticated" && (
+              <button
+                className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE] `}
+              >
+                Bookmarks
+              </button>
+            )}
           </div>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className={`${epilogue} font-bold text-white text-center bg-[#f51d1d] px-5 py-3 rounded-3xl`}
-          >
-            Logout
-          </button>
+          {status == "authenticated" ? (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className={`${epilogue} font-bold text-white text-center bg-[#f51d1d] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#f51d1d] hover: border-[1px] hover:border-[#f51d1d] `}
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => signOut({ callbackUrl: "/SignIn" })}
+              className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE]`}
+            >
+              Signin
+            </button>
+          )}
         </div>
         <div className="flex justify-between">
           <div className="flex flex-col gap-1">

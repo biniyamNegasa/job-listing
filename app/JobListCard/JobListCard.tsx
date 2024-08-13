@@ -25,6 +25,7 @@ export interface CardType {
   categories: string[];
   accessToken: string;
   isBookmarked: boolean;
+  status: string;
 }
 
 const JobListCard = ({
@@ -38,6 +39,7 @@ const JobListCard = ({
   categories,
   accessToken,
   isBookmarked,
+  status,
 }: CardType) => {
   const router = useRouter();
   const [bookmark, setBookmark] = useState(isBookmarked);
@@ -85,7 +87,11 @@ const JobListCard = ({
               {title}
             </h3>
             <button
-              onClick={toggleBookmark}
+              onClick={
+                status === "authenticated"
+                  ? toggleBookmark
+                  : () => router.push("/SignIn")
+              }
               disabled={createObj.isLoading || deleteObj.isLoading}
             >
               {bookmark ? <FaBookmark color="#4640DE" /> : <FaRegBookmark />}
