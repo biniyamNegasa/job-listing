@@ -96,6 +96,7 @@ const OTPForm: React.FC = () => {
     console.log(res);
     if (res && res.data && res.data.success) {
       sessionStorage.setItem("name", res.data.name);
+      alert("Account has been created successfully");
       router.push("/SignIn");
     } else {
       alert("Invalid OTP code.");

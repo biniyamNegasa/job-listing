@@ -38,6 +38,7 @@ const SignIn = () => {
       router.push("/SignIn");
     } else {
       console.log("response: ", res);
+      alert("Successfully logged in")
       router.push("/");
     }
   };

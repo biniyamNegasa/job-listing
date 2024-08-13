@@ -1,6 +1,5 @@
 "use client";
 import "./JobListCard.css";
-import Image from "next/image";
 import { Epilogue } from "next/font/google";
 import BorderBasedTag from "../BorderBasedTag/BorderBasedTag";
 import FilledTag from "../FilledTag/FilledTag";
@@ -46,7 +45,6 @@ const JobListCard = ({
 
   const [createBookmark, createObj] = useCreateBookmarkMutation();
   const [deleteBookmark, deleteObj] = useDeleteBookmarkMutation();
-
   const toggleBookmark = async () => {
     if (bookmark) {
       console.log("Deleting bookmark job with:", { id, accessToken });
@@ -54,6 +52,7 @@ const JobListCard = ({
         const res = await deleteBookmark({ id, accessToken }).unwrap();
         console.log("delete response: ", res);
         console.log("Bookmark deleted successfully");
+        alert("Bookmark deleted successfully");
       } catch (e) {
         console.error("Failed to delete bookmark:", e);
       }
@@ -63,6 +62,7 @@ const JobListCard = ({
         const res = await createBookmark({ id, accessToken }).unwrap();
         console.log("create response: ", res);
         console.log("Bookmark created successfully");
+        alert("Bookmark created successfully");
       } catch (e) {
         console.error("Failed to create bookmark:", e);
       }

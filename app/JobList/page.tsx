@@ -62,7 +62,7 @@ interface UserSession {
   expires: string;
 }
 
-interface Session {
+export interface Session {
   data: UserSession | null;
   status: "loading" | "authenticated" | "unauthenticated";
 }
@@ -76,15 +76,19 @@ const JobList = () => {
   }, [status, session]);
 
   let accessToken = "";
-  if (status === "unauthenticated") {
-  } else {
+  if (status === "authenticated") {
     accessToken = session?.user?.accessToken!;
   }
 
-  const bookmarkDataObject = useGetBookmarkQuery({ accessToken });
-  console.log(bookmarkDataObject.data);
-
-  const { data, isError, isLoading } = useGetAllOpportunitiesQuery({
+  const {
+    data,
+    isError,
+    isLoading,
+    refetch: homeRefetch,
+  } = useGetAllOpportunitiesQuery({
+    accessToken,
+  });
+  const { refetch } = useGetBookmarkQuery({
     accessToken,
   });
   console.log(data);
@@ -112,21 +116,31 @@ const JobList = () => {
     };
     list.push(customCard);
   }
-
+  const [bookmarksTouched, setBookmarksTouched] = useState(false);
+  console.log(list);
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   return (
     <div className="py-[72px] pl-[124px]">
       <div className="w-[919px] flex flex-col gap-10">
         <div className="flex justify-between">
           <div className="flex gap-2">
             <button
-              onClick={() => router.push("/")}
-              className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE] `}
+              className={`${epilogue} font-bold ${" bg-white text-[#4640DE] border-[1px] border-[#4640DE] "} px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover:border-[1px] hover:border-[#4640DE] `}
             >
               HOME
             </button>
             {status == "authenticated" && (
               <button
-                className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE] `}
+                onClick={() => (
+                  refetch(), homeRefetch(), router.push("/Bookmarks")
+                )}
+                className={`${epilogue} font-bold ${" text-white text-center bg-[#4640DE] "} px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover:border-[1px] hover:border-[#4640DE] `}
               >
                 Bookmarks
               </button>
@@ -141,7 +155,7 @@ const JobList = () => {
             </button>
           ) : (
             <button
-              onClick={() => signOut({ callbackUrl: "/SignIn" })}
+              onClick={() => router.push("/SignIn")}
               className={`${epilogue} font-bold text-white text-center bg-[#4640DE] px-5 py-3 rounded-3xl hover:bg-white hover:text-[#4640DE] hover: border-[1px] hover:border-[#4640DE]`}
             >
               Signin
