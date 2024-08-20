@@ -87,6 +87,7 @@ const JobListCard = ({
               {title}
             </h3>
             <button
+            data-testid="bookmark-button"
               onClick={
                 status === "authenticated"
                   ? toggleBookmark
