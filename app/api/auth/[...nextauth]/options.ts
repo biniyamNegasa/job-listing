@@ -7,7 +7,6 @@ export const options: NextAuthOptions = {
     providers: [
         GoogleProvider({
             profile(profile){
-                console.log("Profile Google: ", profile)
                 
                 let userRole = "Google User";
                 return {

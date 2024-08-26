@@ -68,7 +68,6 @@ const SignUp = ({
     }
     if (res && res.data) {
       dispatch(setFormData(data));
-      console.log("response: ", res);
       router.push("/OTPForm");
     }
   };
@@ -187,8 +186,8 @@ const SignUp = ({
           </Link>
         </div>
         <p className="text-center">
-          By clicking 'Continue', you acknowledge that you have read and
-          accepted our
+          By clicking &apos;Continue&apos;, you acknowledge that you have read
+          and accepted our
         </p>
         <p className="text-center">
           <Link href="#" className="text-[#4640DE]">

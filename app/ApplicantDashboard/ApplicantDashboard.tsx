@@ -69,8 +69,8 @@ const ApplicantDashboard = ({
              ${epilogue.className} 
                text-base font-normal text-[#25324B]`}
           >
-            {responsibilities.split("\n").map((text) => (
-              <li className="flex gap-2">
+            {responsibilities.split("\n").map((text, index) => (
+              <li className="flex gap-2" key={index}>
                 <FaRegCheckCircle className="text-[#56CDAD] flex-none" />
                 {text}
               </li>
@@ -87,8 +87,8 @@ const ApplicantDashboard = ({
               " text-base font-normal text-[#25324B] list-disc list-inside"
             }
           >
-            {traits.split("\n").map((text) => (
-              <li>{text}</li>
+            {traits.split("\n").map((text, index) => (
+              <li key={index}>{text}</li>
             ))}
           </ul>
         </div>
@@ -148,8 +148,9 @@ const ApplicantDashboard = ({
             Categories
           </div>
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <FilledTag
+                key={index}
                 color="text-[#FFB836]"
                 bgColor="bg-[#EB85331A]/10"
                 text={category}
@@ -164,8 +165,9 @@ const ApplicantDashboard = ({
             Required Skills
           </div>
           <div className="flex flex-wrap gap-2">
-            {requiredSkills.map((skill) => (
+            {requiredSkills.map((skill, index) => (
               <BorderBasedTag
+                key={index}
                 color="text-[#4640DE]"
                 borderColor="border-[#4640DE]"
                 text={skill}

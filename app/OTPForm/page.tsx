@@ -68,7 +68,6 @@ const OTPForm: React.FC = () => {
     // Logic to resend OTP goes here
     // For example: trigger an API call to resend the OTP
     SignUpUser(formData);
-    console.log(formData);
     setCountdown(30); // Reset the countdown
     setIsResendDisabled(true); // Disable resend button again
 
@@ -93,7 +92,6 @@ const OTPForm: React.FC = () => {
     // For example: trigger an API call to verify the OTP
     const res = await VerifyEmail(data);
 
-    console.log(res);
     if (res && res.data && res.data.success) {
       sessionStorage.setItem("name", res.data.name);
       alert("Account has been created successfully");
@@ -112,7 +110,7 @@ const OTPForm: React.FC = () => {
           Verify Email
         </h1>
         <p className={`${poppins} text-center text-[#7C8493] mb-8`}>
-          We've sent a verification code to the email address you provided. To
+          We&apos;ve sent a verification code to the email address you provided. To
           complete the verification process, please enter the code here.
         </p>
         <form
@@ -129,7 +127,9 @@ const OTPForm: React.FC = () => {
                 onChange={(e) => handleChange(e, index)}
                 maxLength={1}
                 className="w-16 h-12 border-2 border-[#4640DE66]/40 rounded-[7px] text-center text-2xl"
-                ref={(el) => (inputRefs.current[index] = el)}
+                ref={(el) => {
+                  if (el) inputRefs.current[index] = el;
+                }}
                 required
               />
             ))}

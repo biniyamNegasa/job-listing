@@ -47,21 +47,15 @@ const JobListCard = ({
   const [deleteBookmark, deleteObj] = useDeleteBookmarkMutation();
   const toggleBookmark = async () => {
     if (bookmark) {
-      console.log("Deleting bookmark job with:", { id, accessToken });
       try {
         const res = await deleteBookmark({ id, accessToken }).unwrap();
-        console.log("delete response: ", res);
-        console.log("Bookmark deleted successfully");
         alert("Bookmark deleted successfully");
       } catch (e) {
         console.error("Failed to delete bookmark:", e);
       }
     } else {
-      console.log("Bookmarking job with:", { id, accessToken });
       try {
         const res = await createBookmark({ id, accessToken }).unwrap();
-        console.log("create response: ", res);
-        console.log("Bookmark created successfully");
         alert("Bookmark created successfully");
       } catch (e) {
         console.error("Failed to create bookmark:", e);
@@ -87,7 +81,7 @@ const JobListCard = ({
               {title}
             </h3>
             <button
-            data-testid="bookmark-button"
+              data-testid={`bookmark-button-${id}`}
               onClick={
                 status === "authenticated"
                   ? toggleBookmark

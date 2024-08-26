@@ -27,7 +27,6 @@ const Bookmarks = () => {
   const { data: session, status } = useSession() as Session;
 
   useEffect(() => {
-    console.log("Session:", session, "Status:", status);
   }, [status, session]);
 
   if (status === "unauthenticated") {

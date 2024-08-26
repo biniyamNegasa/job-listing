@@ -72,7 +72,6 @@ const JobList = () => {
   const { data: session, status } = useSession() as Session;
 
   useEffect(() => {
-    console.log("my session: ", session, status);
   }, [status, session]);
 
   let accessToken = "";
@@ -91,7 +90,6 @@ const JobList = () => {
   const { refetch } = useGetBookmarkQuery({
     accessToken,
   });
-  console.log(data);
   const [postings, setPostings] = useState<JobPosting[]>([]);
   useEffect(() => {
     if (data) {
@@ -117,7 +115,6 @@ const JobList = () => {
     list.push(customCard);
   }
   const [bookmarksTouched, setBookmarksTouched] = useState(false);
-  console.log(list);
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">

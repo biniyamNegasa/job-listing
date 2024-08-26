@@ -7,11 +7,16 @@ import { useGetOpportunityByIdQuery } from "../service/job-info";
 
 const DataPage = () => {
   const [id, setId] = useState<string | null>(null);
-  const searchId = new URLSearchParams(window.location.search).get("id");
-  const { data, isError, isLoading } = useGetOpportunityByIdQuery(searchId);
   const [jobPost, setJobPost] = useState<DashboardType | null>(null);
+
   useEffect(() => {
-    console.log(data);
+    const searchId = new URLSearchParams(window.location.search).get("id");
+    setId(searchId);
+  }, []);
+
+  const { data, isError, isLoading } = useGetOpportunityByIdQuery(id);
+
+  useEffect(() => {
     if (data) {
       const jobPostData: JobPosting = data.data;
       const misc: DashboardType = {
@@ -30,10 +35,11 @@ const DataPage = () => {
       setJobPost(misc);
     }
   }, [data]);
+
   return jobPost ? (
     <ApplicantDashboard {...jobPost} />
   ) : (
-    <p>There's no page with that description</p>
+    <p>There&apos;s no page with that description</p>
   );
 };
 
