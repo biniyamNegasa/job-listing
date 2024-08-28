@@ -1,5 +1,6 @@
 // JobListCard.test.tsx
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/dom";
 import JobListCard, { CardType } from "./JobListCard";
 import {
   useCreateBookmarkMutation,
@@ -16,7 +17,7 @@ describe("JobListCard", () => {
   jest.mock("next/navigation", () => require("__mocks__/next/navigation"));
   const renderComponent = (props: Partial<CardType> = {}) => {
     const defaultProps: CardType = {
-      id: "1",
+      id: "657063e2144042c215319530",
       title: "Software Engineer",
       description: "Great job opportunity",
       imageLink: "/logo.png",
@@ -48,12 +49,14 @@ describe("JobListCard", () => {
     ]);
 
     renderComponent({ isBookmarked: false });
-    const bookmarkButton = screen.getByTestId("bookmark-button");
+    const bookmarkButton = screen.getByTestId(
+      "bookmark-button-657063e2144042c215319530"
+    );
     fireEvent.click(bookmarkButton);
 
     expect(createBookmarkMock).toHaveBeenCalledWith({
       accessToken: "mock-token",
-      id: "1",
+      id: "657063e2144042c215319530",
     });
     expect(createBookmarkMock).toHaveBeenCalledTimes(1);
   });
@@ -71,13 +74,15 @@ describe("JobListCard", () => {
     ]);
 
     renderComponent({ isBookmarked: true });
-    const bookmarkButton = screen.getByTestId("bookmark-button");
+    const bookmarkButton = screen.getByTestId(
+      "bookmark-button-657063e2144042c215319530"
+    );
 
     fireEvent.click(bookmarkButton);
 
     expect(deleteBookmarkMock).toHaveBeenCalledWith({
       accessToken: "mock-token",
-      id: "1",
+      id: "657063e2144042c215319530",
     });
     expect(deleteBookmarkMock).toHaveBeenCalledTimes(1);
   });
@@ -94,7 +99,9 @@ describe("JobListCard", () => {
     ]);
 
     renderComponent();
-    const bookmarkButton = screen.getByTestId("bookmark-button");
+    const bookmarkButton = screen.getByTestId(
+      "bookmark-button-657063e2144042c215319530"
+    );
 
     expect(bookmarkButton).toBeDisabled();
   });
