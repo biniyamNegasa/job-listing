@@ -19,7 +19,7 @@ cd job-listing
 - Change branch
 
 ```bash
-git checkout auth-branch
+git checkout bookmark-branch
 ```
 
 - run the following
@@ -42,12 +42,20 @@ npm install && npm run dev
 
 ![otp form](./public/otpform.png)
 
-### Landing page
+### Landing page with out logging in
 
 It has the list jobs of available
-![description page part 1](./public/fullpage.png)
+![description page part 1](./public/screencapture-localhost-3000-2024-08-28-10_41_21.png)
 
 ### Description page
 
 Each job has its own detailed page
 ![description page part 2](./public/screencaptureApplicantDashboard.png)
+
+### Landing page with logging in
+
+![desc](./public/screencapture-localhost-3000-2024-08-28-10_43_13.png)
+
+### Bookmark page
+
+![bookmark](./public/screencapture-localhost-3000-Bookmarks-2024-08-28-10_50_19.png)
